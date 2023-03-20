@@ -7,40 +7,50 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    options.tableName = 'ReviewImages';
+    options.tableName = 'Reviews';
     return queryInterface.bulkInsert(options, [
       {
         // id: 1,
-        reviewId: 1,
-        url: www.review.com,
+        spotId: 1,
+        userId: 1,
+        review: 'This house is nice.',
+        stars: 5,
         // createdAt: new Date(),
         // updatedAt: new Date(),
       },
       {
-        // id: 2,
-        reviewId: 2,
-        url: www.review.com,
+        // id: 1,
+        spotId: 2,
+        userId: 2,
+        review: 'What a great looking home.',
+        stars: 4,
         // createdAt: new Date(),
         // updatedAt: new Date(),
       },
       {
-        // id: 3,
-        reviewId: 3,
-        url: www.review.com,
+        // id: 1,
+        spotId: 3,
+        userId: 3,
+        review: 'This home was no as advertise 0/10 would never come back.',
+        stars: 1,
         // createdAt: new Date(),
         // updatedAt: new Date(),
       },
       {
-        // id: 4,
-        reviewId: 4,
-        url: www.review.com,
+        // id: 1,
+        spotId: 4,
+        userId: 4,
+        review: 'Great accommodations for large groups.',
+        stars: 5,
         // createdAt: new Date(),
         // updatedAt: new Date(),
       },
       {
-        // id: 5,
-        reviewId: 5,
-        url: www.review.com,
+        // id: 1,
+        spotId: 5,
+        userId: 5,
+        review: 'Great house 10/10.',
+        stars: 5,
         // createdAt: new Date(),
         // updatedAt: new Date(),
       },
@@ -48,7 +58,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    options.tableName = 'ReviewImages';
+    options.tableName = 'Reviews';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       // username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
