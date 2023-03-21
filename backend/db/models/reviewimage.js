@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { FOREIGNKEYS } = require('sequelize/types/query-types');
 module.exports = (sequelize, DataTypes) => {
   class ReviewImage extends Model {
     /**
@@ -11,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      ReviewImage.belongsTo(models.Review, { foreignKey: 'reviewId' })
     }
   }
   ReviewImage.init({

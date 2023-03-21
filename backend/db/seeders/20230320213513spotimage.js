@@ -11,38 +11,28 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: www.image.com,
+        url: 'www.image.com',
         preview: true,
-        // createdAt: new Date(),
-        // updatedAt: new Date(),
       },
       {
         spotId: 2,
-        url: www.image.com,
+        url: 'www.image2.com',
         preview: true,
-        // createdAt: new Date(),
-        // updatedAt: new Date(),
       },
       {
         spotId: 3,
-        url: www.image.com,
+        url: 'www.image3.com',
         preview: true,
-        // createdAt: new Date(),
-        // updatedAt: new Date(),
       },
       {
         spotId: 4,
-        url: www.image.com,
+        url: 'www.image4.com',
         preview: false,
-        // createdAt: new Date(),
-        // updatedAt: new Date(),
       },
       {
         spotId: 5,
-        url: www.image.com,
+        url: 'www.image5.com',
         preview: true,
-        // createdAt: new Date(),
-        // updatedAt: new Date(),
       },
     ], {});
   },
