@@ -36,9 +36,9 @@ module.exports = {
       {
         ownerId: 3,
         address: '789 Oak Street',
-        city: 'London',
-        state: '',
-        country: 'UK',
+        city: 'Los Angeles',
+        state: 'CA',
+        country: 'USA',
         lat: 51.5074,
         lng: -0.1278,
         name: 'Charming Townhouse',
@@ -77,7 +77,7 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       // username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
-      ownerId: { [Op.in]: ['1', '2', '3', '4', '5'] }
+      // ownerId: { [Op.in]: ['1', '2', '3', '4', '5'] }
     }, {});
   }
 };
