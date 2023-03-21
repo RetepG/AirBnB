@@ -2,7 +2,7 @@
 const {
   Model
 } = require('sequelize');
-const { FOREIGNKEYS } = require('sequelize/types/query-types');
+// const { FOREIGNKEYS } = require('sequelize/types/query-types');
 module.exports = (sequelize, DataTypes) => {
   class ReviewImage extends Model {
     /**
