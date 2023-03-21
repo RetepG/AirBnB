@@ -8,9 +8,9 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   // async up(queryInterface, Sequelize) {
-  //   await queryInterface.createTable('Bookings', {
+  //   await queryInterface.createTable('SpotImages', {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Bookings", {
+    return queryInterface.createTable("SpotImages", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,18 +20,13 @@ module.exports = {
       spotId: {
         type: Sequelize.INTEGER,
         references: { model: 'Spots' },
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Users' },
-        onDelete: 'CASCADE'
+      url: {
+        type: Sequelize.STRING
       },
-      startDate: {
-        type: Sequelize.DATE
-      },
-      endDate: {
-        type: Sequelize.DATE
+      preview: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -45,12 +40,12 @@ module.exports = {
       }
     }, options);
   },
-  // async down(queryInterface, Sequelize) {
-  //   await queryInterface.dropTable('Bookings');
-  // }
-
+  //   async down(queryInterface, Sequelize) {
+  //     await queryInterface.dropTable('SpotImages');
+  //   }
+  // };
   down: async (queryInterface, Sequelize) => {
-    options.tableName = "Bookings";
+    options.tableName = "SpotImages";
     return queryInterface.dropTable(options);
   }
 };
