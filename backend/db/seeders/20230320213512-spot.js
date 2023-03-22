@@ -1,5 +1,7 @@
 'use strict';
 
+const { User, Spot } = require("../models");
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -7,10 +9,20 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+
+    //Retreive users from users table setting it to id
+    const users = await User.findAll();
+    const userId = [];
+
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+      userId.push({ username: user.username, id: user.id });
+    }
+
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
-        ownerId: 1,
+        ownerId: userId[0].id,
         address: '123 Main Street',
         city: 'New York City',
         state: 'New York',
@@ -22,7 +34,7 @@ module.exports = {
         price: 100.52,
       },
       {
-        ownerId: 2,
+        ownerId: userId[1].id,
         address: '456 Elm Street',
         city: 'San Francisco',
         state: 'California',
@@ -34,7 +46,7 @@ module.exports = {
         price: 500.32,
       },
       {
-        ownerId: 3,
+        ownerId: userId[2].id,
         address: '789 Oak Street',
         city: 'Los Angeles',
         state: 'CA',
@@ -46,7 +58,7 @@ module.exports = {
         price: 200.12,
       },
       {
-        ownerId: 4,
+        ownerId: userId[3].id,
         address: '321 Pine Street',
         city: 'Miami',
         state: 'Florida',
@@ -58,7 +70,7 @@ module.exports = {
         price: 300.50,
       },
       {
-        ownerId: 5,
+        ownerId: userId[4].id,
         address: '123 Gold Street',
         city: 'Monterey Park',
         state: 'California',
@@ -75,9 +87,10 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
+
     return queryInterface.bulkDelete(options, {
       // username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
-      Id: { [Op.in]: [1, 2, 3, 4, 5] }
+      id: { [Op.in]: [1, 2, 3, 4, 5] }
     }, {});
   }
 };
