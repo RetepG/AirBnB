@@ -25,7 +25,7 @@ router.post(
     '/',
     validateLogin,
     async (req, res, next) => {
-        const { credential, password } = req.body;
+        const { credential, password } = req.body; //email or pass
 
         const user = await User.unscoped().findOne({
             where: {
