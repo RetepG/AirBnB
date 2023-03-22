@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-    //Retreive users from users table setting it to id
+    // Retreive users from users table setting it to id
     // const users = await User.findAll();
     // const userId = [];
 
