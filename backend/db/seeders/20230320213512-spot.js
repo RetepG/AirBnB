@@ -74,7 +74,7 @@ module.exports = {
         price: 300.50,
       },
       {
-        ownerId: userId[4].id,
+        // ownerId: userId[4].id,
         ownerId: 5,
         address: '123 Gold Street',
         city: 'Monterey Park',
