@@ -34,35 +34,34 @@ router.get('/', async (req, res) => {
 });
 
 
-
 // const validateSpot = [
 //     check('address')
 //         .exists({ checkFalsy: true })
-//         .withMessage('Street address is required'),
+//         .withMessage('Enter in a street address.'),
 //     check('city')
 //         .exists({ checkFalsy: true })
-//         .withMessage('City is required'),
+//         .withMessage('Enter in a city.'),
 //     check('state')
 //         .exists({ checkFalsy: true })
-//         .withMessage('State is required'),
+//         .withMessage('Enter in a state.'),
 //     check('country')
 //         .exists({ checkFalsy: true })
-//         .withMessage('Country is required'),
+//         .withMessage('Enter in a country.'),
 //     check('lat')
 //         .exists({ checkFalsy: true })
-//         .withMessage('Latitude is not valid'),
+//         .withMessage('Enter in a latitude.'),
 //     check('lng')
 //         .exists({ checkFalsy: true })
-//         .withMessage('Longitude is not valid'),
+//         .withMessage('Enter in a longitude.'),
 //     check('name')
 //         .exists({ checkFalsy: true })
-//         .withMessage('Name must be less than 50 characters'),
+//         .withMessage('Enter in a name.'),
 //     check('description')
 //         .exists({ checkFalsy: true })
-//         .withMessage('Description is required'),
+//         .withMessage('Enter in a description for your place.'),
 //     check('price')
 //         .exists({ checkFalsy: true })
-//         .withMessage('Price per day is required'),
+//         .withMessage('Enter in your desired price.'),
 //     handleValidationErrorsSpots
 // ];
 
