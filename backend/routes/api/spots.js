@@ -159,33 +159,6 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
 })
 
 //Add an Image to a Spot based on the Spot's id
-// router.post('/:spotId/images', requireAuth, validateImage, async (req, res, next) => {
-//     let spot = await Spot.findByPk(req.params.spotId);
-
-//     if (!spot) {
-//         const err = new Error("Spot couldn't be found");
-//         err.status = 404;
-//         return next(err);
-//     } else if (spot.ownerId !== req.user.id) {
-//         const err = new Error("Auth needed");
-//         err.status = 404;
-//         return next(err);
-//     } else {
-//         const { url: imageUrl, preview: imagePreview } = req.body
-//         const newImage = SpotImage.create({
-//             spotId: req.user.id,
-//             url: imageUrl,
-//             preview: imagePreview
-//         })
-//         // newImage.validate();
-//         // await newImage.save();
-
-//         const { id, url, preview } = newImage.toJSON();
-
-//         return res.status(200).json({ id, url, preview });
-
-//     };
-// });
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     let error = { message: "Validation error", statusCode: 400, errors: [] }
     const { spotId } = req.params
@@ -245,7 +218,27 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     return res.status(200).json({ id: newImage.id, url: newImage.url, preview: newImage.preview })
 })
 
-//
+//edit a spot
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
+    const checkSpot = await Spot.findByPk(req.params.spotId)
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+    if (!checkSpot) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+    if (checkSpot.ownerId !== req.user.id) {
+        const err = new Error("Forbidden");
+        err.status = 404;
+        return next(err);
+    }
+
+    checkSpot.set({ address, city, state, country, lat, lng, name, description, price });
+    await checkSpot.save();
+    return res.status(200).json(checkSpot);
+
+})
 
 
 module.exports = router;
