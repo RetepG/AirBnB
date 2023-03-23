@@ -33,6 +33,34 @@ router.get('/', async (req, res) => {
     return res.status(200).json({ Spots: spots });
 });
 
+//get spot by user
+router.get('/current', requireAuth, async (req, res) => {
+    const userId = req.user.id
+
+    const spots = await Spot.findAll({
+        where: {
+            ownerId: req.user.id
+        },
+        attributes: [
+            'id', 'ownerId', 'address', 'city', 'state',
+            'country', 'lat', 'lng', 'name', 'description',
+            'price', 'createdAt', 'updatedAt',
+            // include the average rating using a subquery
+            [
+                sequelize.literal(`(SELECT AVG(stars)
+                FROM Reviews
+                WHERE Reviews.spotId = Spot.id
+                )`), 'avgRating'
+            ],
+            [
+                sequelize.literal(`(SELECT url
+                FROM "SpotImages"
+                WHERE "SpotImages"."spotId" = "Spot"."id")`), 'previewImage',
+            ],
+        ],
+    });
+    return res.status(200).json({ Spots: spots });
+});
 
 // const validateSpot = [
 //     check('address')
