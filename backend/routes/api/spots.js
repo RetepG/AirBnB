@@ -158,4 +158,94 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
     return res.status(201).json(createSpot)
 })
 
+//Add an Image to a Spot based on the Spot's id
+// router.post('/:spotId/images', requireAuth, validateImage, async (req, res, next) => {
+//     let spot = await Spot.findByPk(req.params.spotId);
+
+//     if (!spot) {
+//         const err = new Error("Spot couldn't be found");
+//         err.status = 404;
+//         return next(err);
+//     } else if (spot.ownerId !== req.user.id) {
+//         const err = new Error("Auth needed");
+//         err.status = 404;
+//         return next(err);
+//     } else {
+//         const { url: imageUrl, preview: imagePreview } = req.body
+//         const newImage = SpotImage.create({
+//             spotId: req.user.id,
+//             url: imageUrl,
+//             preview: imagePreview
+//         })
+//         // newImage.validate();
+//         // await newImage.save();
+
+//         const { id, url, preview } = newImage.toJSON();
+
+//         return res.status(200).json({ id, url, preview });
+
+//     };
+// });
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    let error = { message: "Validation error", statusCode: 400, errors: [] }
+    const { spotId } = req.params
+
+    const checkSpot = await Spot.findByPk(spotId)
+
+    // Check spot exist
+    if (!checkSpot) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+    if (checkSpot.ownerId !== req.user.id) {
+        const err = new Error("Forbidden");
+        err.status = 404;
+        return next(err);
+    }
+
+    // Check spot belong to user
+    if (checkSpot.ownerId !== req.user.id) {
+        const err = new Error("Forbidden");
+        err.status = 403;
+        return next(err);
+    }
+
+    // Check spot exist and belong to current user
+    const spot = await Spot.findOne({
+        where: {
+            id: spotId,
+            ownerId: req.user.id
+        }
+    });
+
+    if (!spot) {
+        res.json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+        return res.status(404)
+    }
+    //checking body for info
+    const { url, preview } = req.body;
+    if (!url || url === '') {
+        error.errors.push("url is required");
+    }
+
+    if (!preview || preview === '') {
+        error.errors.push("preview is required");
+    }
+
+    if (error.errors.length) {
+        return res.status(400).json(error);
+    }
+
+    const newImage = await SpotImage.create({ url, preview, spotId });
+
+    return res.status(200).json({ id: newImage.id, url: newImage.url, preview: newImage.preview })
+})
+
+//
+
+
 module.exports = router;
