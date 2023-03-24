@@ -4,6 +4,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { Op } = require('sequelize')
 const { Spot, Review, SpotImage, sequelize, User, ReviewImage, Booking } = require('../../db/models');
+const spot = require('../../db/models/spot');
 
 const router = express.Router()
 
@@ -38,31 +39,69 @@ const validateSpot = [
     handleValidationErrors
 ];
 
-//get all users
+// get all users
+// router.get('/', async (req, res) => {
+//     // Find all spots and their associated data
+//     const spots = await Spot.findAll({
+//         attributes: [
+//             'id', 'ownerId', 'address', 'city', 'state',
+//             'country', 'lat', 'lng', 'name', 'description',
+//             'price', 'createdAt', 'updatedAt',
+//             // include the average rating using a subquery
+//             [
+//                 sequelize.literal(`(SELECT AVG(stars)
+//                 FROM Reviews
+//                 WHERE Reviews.spotId = Spot.id
+//                 )`), 'avgRating'
+//             ],
+//             [
+//                 sequelize.literal(`(SELECT url
+//                 FROM "SpotImages"
+//                 WHERE "SpotImages"."spotId" = "Spot"."id")`), 'previewImage',
+//             ],
+//         ]
+//     });
+
+//     // Return all spots as the response
+//     return res.status(200).json({ Spots: spots });
+// });
+
 router.get('/', async (req, res) => {
-    // Find all spots and their associated data
+    // Find all spots
     const spots = await Spot.findAll({
-        attributes: [
-            'id', 'ownerId', 'address', 'city', 'state',
-            'country', 'lat', 'lng', 'name', 'description',
-            'price', 'createdAt', 'updatedAt',
-            // include the average rating using a subquery
-            [
-                sequelize.literal(`(SELECT AVG(stars)
-                FROM Reviews
-                WHERE Reviews.spotId = Spot.id
-                )`), 'avgRating'
-            ],
-            [
-                sequelize.literal(`(SELECT url
-                FROM "SpotImages"
-                WHERE "SpotImages"."spotId" = "Spot"."id")`), 'previewImage',
-            ],
-        ]
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt']
     });
 
+    //store spot
+    const spotsWithAssociations = [];
+
+    for (let spot of spots) {
+        //get avg rating
+        const avgRatingResult = await Review.findOne({
+            attributes: [[sequelize.fn('AVG', sequelize.col('stars')), 'avgRating']],
+            where: { spotId: spot.id }
+        });
+
+        //get the avg rating from query
+        const avgRating = avgRatingResult.get('avgRating');
+
+        const previewImageResult = await SpotImage.findOne({
+            attributes: ['url'],
+            where: { spotId: spot.id, preview: true }
+        });
+
+        //check if there is a preview
+        let previewImage = null;
+        if (previewImageResult !== null && previewImageResult !== undefined) {
+            previewImage = previewImageResult.get('url');
+        }
+
+        //add spot to the data of the array
+        spotsWithAssociations.push({ ...spot.toJSON(), avgRating, previewImage });
+    }
+
     // Return all spots as the response
-    return res.status(200).json({ Spots: spots });
+    res.status(200).json({ Spots: spotsWithAssociations });
 });
 
 //get spot by user
