@@ -49,14 +49,14 @@ router.get('/', async (req, res) => {
             // include the average rating using a subquery
             [
                 sequelize.literal(`(SELECT AVG(stars)
-                FROM Reviews
-                WHERE Reviews.spotId = Spot.id
+                FROM reviews
+                WHERE reviews.spotId = Spot.id
                 )`), 'avgRating'
             ],
             [
                 sequelize.literal(`(SELECT url
-                FROM "SpotImages"
-                WHERE "SpotImages"."spotId" = "Spot"."id")`), 'previewImage',
+                FROM "spotImages"
+                WHERE "spotImages"."spotId" = "Spot"."id")`), 'previewImage',
             ],
         ]
     });
