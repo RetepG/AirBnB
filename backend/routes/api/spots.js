@@ -2,7 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const { Spot, Review, SpotImage, sequelize, User, ReviewImage } = require('../../db/models');
+const { Spot, Review, SpotImage, sequelize, User, ReviewImage, Booking } = require('../../db/models');
 
 const router = express.Router()
 
@@ -287,6 +287,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     res.status(200).json({ Reviews: spot.Reviews })
 })
 
+//check for any input from user
 const validateReview = [
     check('review')
         .exists({ checkFalsy: true })
@@ -331,6 +332,35 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     await createReview.save()
 
     res.status(201).json(createReview)
+})
+
+// // Get booking by spot id
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+    const attributes = ['spotId', 'startDate', 'endDate'] //always return these values regardless of if user or not
+    let include = []
+
+    if (!spot) {
+        const err = new Error("Spot couldn't be found!")
+        err.status = 404;
+        return next(err);
+    }
+
+    if (req.user.id === spot.ownerId) { //if user add more attributes
+        attributes.push('id', 'userId', 'createdAt', 'updatedAt')
+        include.push({ model: User, attributes: ['id', 'firstName', 'lastName'] })
+    }
+
+    //empty unless its the actual user
+    const bookings = await Booking.findAll({
+        where: {
+            spotId: req.params.spotId
+        },
+        include, //empty if not user
+        attributes //add more attributes if user
+    })
+
+    res.status(200).json({ Bookings: bookings })
 })
 
 module.exports = router;
