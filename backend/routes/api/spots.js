@@ -131,7 +131,7 @@ router.get('/:id', async (req, res, next) => {
     })
     if (!spot && spot === null) {
         res.status(404);
-        return res.json({ message: "Spot couldn't be found" })
+        return res.json({ message: "Spot couldn't be found!" })
     }
     console.log(spot)
 
@@ -167,12 +167,12 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     // Check spot exist
     if (!checkSpot) {
-        const err = new Error("Spot couldn't be found");
+        const err = new Error("Spot couldn't be found!");
         err.status = 404;
         return next(err);
     }
     if (checkSpot.ownerId !== req.user.id) {
-        const err = new Error("Forbidden");
+        const err = new Error("Forbidden user");
         err.status = 404;
         return next(err);
     }
@@ -194,7 +194,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
     if (!spot) {
         res.json({
-            message: "Spot couldn't be found",
+            message: "Spot couldn't be found!",
             statusCode: 404
         })
         return res.status(404)
@@ -224,12 +224,12 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name, description, price } = req.body
 
     if (!checkSpot) {
-        const err = new Error("Spot couldn't be found");
+        const err = new Error("Spot couldn't be found!");
         err.status = 404;
         return next(err);
     }
     if (checkSpot.ownerId !== req.user.id) {
-        const err = new Error("Forbidden");
+        const err = new Error("Forbidden user");
         err.status = 404;
         return next(err);
     }
@@ -239,6 +239,27 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     return res.status(200).json(checkSpot);
 
 })
+
+//delete a spot
+router.delete('/:id', requireAuth, async (req, res, next) => {
+    const deleteSpot = await Spot.findByPk(req.params.id);
+
+    if (!deleteSpot) {
+        const err = new Error("Spot couldn't be found!")
+        err.status = 404;
+        return next(err);
+    }
+
+    if (deleteSpot.ownerId !== req.user.id) {
+        const err = new Error("Forbidden user.");
+        err.status = 404;
+        return next(err);
+    }
+
+    await deleteSpot.destroy();
+    res.status(200).json({ message: "Successfully deleted" })
+})
+
 
 
 module.exports = router;
