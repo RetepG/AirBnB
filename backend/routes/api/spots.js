@@ -363,8 +363,26 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.status(200).json({ Bookings: bookings })
 })
 
+const validBookTime = async(req, res, next) => {
+    const start = new Date(req.body.startDate)
+    const end = new Date(req.body.endDate)
+
+    const err = new Error("Validation error")
+    err.status = 400;
+    err.errors = {};
+
+    if(start >= end) {
+        err.errors.end = 'The End date cannot be before start or exact time as start.'
+        return next(err)
+    }
+}
+
+const validBookingAvailability = async(req, res, next) => {
+
+}
+
 //create a booking from spot based on spot id
-router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
+router.post('/:spotId/bookings', requireAuth, validBookTime, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)
     const start = new Date(req.body.startDate)
     const end = new Date(req.body.endDate)
