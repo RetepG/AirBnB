@@ -507,8 +507,8 @@ const checkBooking = async (req, res, next) => {
     const { startDate, endDate } = req.body;
 
     // Create new Date objects from startDate and endDate
-    const newBookingStart = new Date(startDate);
-    const newBookingEnd = new Date(endDate);
+    const startNew = new Date(startDate);
+    const endNew = new Date(endDate);
 
     // Find all bookings for the specified spot and convert them to an array of JSON objects
     const bookings = await Booking.findAll({
@@ -517,25 +517,29 @@ const checkBooking = async (req, res, next) => {
         },
         attributes: ['id', 'spotId', 'userId', 'startDate', 'endDate']
     });
+
     const bookingsArray = bookings.map((booking) => booking.toJSON());
 
     // Create an object to store the booking conflict error message and errors
     const bookingConflict = {
         message: "Sorry, this spot is already booked for the specified dates",
-        errors: {},
+        errors: {
+            "startDate": "Start date conflicts with an existing booking",
+            "endDate": "End date conflicts with an existing booking"
+        },
     };
 
     // Check if there is any booking that conflicts with the new booking
     const hasConflict = bookingsArray.some((booking) => { //checks array if one satisfies condition of true
 
         // Create new Date objects from the current booking's start and end dates
-        const currBookingStart = new Date(booking.startDate);
-        const currBookingEnd = new Date(booking.endDate);
+        const currStart = new Date(booking.startDate);
+        const currEnd = new Date(booking.endDate);
 
         // If the new booking start date falls within an existing booking period, set the error message and return true
         if (
-            newBookingStart.getTime() >= currBookingStart.getTime() &&
-            newBookingStart.getTime() <= currBookingEnd.getTime()
+            startNew.getTime() >= currStart.getTime() &&
+            startNew.getTime() <= currEnd.getTime()
         ) {
             bookingConflict.errors.startDate =
                 "Start date conflicts with an existing booking";
@@ -544,8 +548,8 @@ const checkBooking = async (req, res, next) => {
 
         // If the new booking end date falls within an existing booking period, set the error message and return true
         if (
-            newBookingEnd.getTime() >= currBookingStart.getTime() &&
-            newBookingEnd.getTime() <= currBookingEnd.getTime()
+            endNew.getTime() >= currStart.getTime() &&
+            endNew.getTime() <= currEnd.getTime()
         ) {
             bookingConflict.errors.endDate =
                 "End date conflicts with an existing booking";
