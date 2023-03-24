@@ -363,4 +363,23 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.status(200).json({ Bookings: bookings })
 })
 
+//create a booking from spot based on spot id
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId)
+    const start = new Date(req.body.startDate)
+    const end = new Date(req.body.endDate)
+
+    if (!spot) {
+        const err = new Error("Spot couldn't be found!")
+        err.status = 404;
+        return next(err);
+    }
+
+    if (req.user.id === spot.ownerId) {
+        const err = new Error("You own this spot.")
+        err.status = 404;
+        return next(err);
+    }
+})
+
 module.exports = router;
