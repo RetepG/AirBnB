@@ -260,6 +260,53 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
     res.status(200).json({ message: "Successfully deleted" })
 })
 
+// get review by spot id
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId, {
+        include: {
+            model: Review,
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'firstName', 'lastName']
+                },
+                {
+                    model: ReviewImage,
+                    attributes: ['id', 'url']
+                }
+            ]
+        }
+    })
 
+    if (!spot) {
+        const err = new Error("Spot couldn't be found!")
+        err.status = 404;
+        return next(err);
+    }
+
+    res.status(200).json({ Reviews: spot.Reviews })
+})
+
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Enter in a review.'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .withMessage('Enter in a rating (stars) value.'),
+    handleValidationErrors
+]
+
+//Create a review for a spot based on the Spot's id
+router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, next) =>{
+    const spot = await Spot.findByPk(req.params.spotId)
+    //looking for if review exist
+    const review = await Review.findAll({
+        where:{
+            userId: req.user.id,
+            spotId: req.params.spotId
+        }
+    })
+})
 
 module.exports = router;
