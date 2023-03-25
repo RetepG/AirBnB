@@ -6,6 +6,7 @@ const { Spot, SpotImage, Review, User, Booking, ReviewImage } = require('../../d
 
 const router = express.Router();
 
+//get curr review
 router.get('/current', requireAuth, async (req, res) => {
 
     const options = {
@@ -61,6 +62,56 @@ router.get('/current', requireAuth, async (req, res) => {
 
     res.json({ Reviews: reviewArr });
 })
+
+//add image to review
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+
+    const { reviewId } = req.params;
+    const { url: imageUrl } = req.body;
+
+    const review = await Review.findByPk(reviewId, {
+        include: {
+            model: ReviewImage,
+            attributes: ['id']
+        }
+    });
+
+    if (!review) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    if (review.userId !== req.user.id) {
+        const err = new Error("Forbidden");
+        err.status = 404;
+        return next(err);
+    }
+
+    // Count the number of review images for this review, using the related data that was loaded.
+    const currReviewImg = review.ReviewImages;
+    const numReviewImages = currReviewImg.length;
+
+    if (numReviewImages >= 8) {
+        const err = new Error("Maximum number of images for this resource was reached");
+        err.status = 404;
+        return next(err);
+    }
+
+    // Create a new review image for this review.
+    const newReviewImage = await ReviewImage.create({
+        reviewId: review.id,
+        url: imageUrl
+    });
+
+    const { id, url } = newReviewImage.toJSON();
+
+    return res.status(200).json({
+        id,
+        url
+    });
+
+});
 
 
 module.exports = router
