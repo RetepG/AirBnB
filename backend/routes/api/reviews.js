@@ -93,7 +93,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     }
 
     if (review.userId !== req.user.id) {
-        const err = new Error("Forbidden");
+        const err = new Error("Forbidden request");
         err.status = 404;
         return next(err);
     }
@@ -126,7 +126,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
 //Edit Review
 router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
     const userReview = await Review.findByPk(req.params.reviewId)
-    const { review, stars} = req.body
+    const { review, stars } = req.body
 
     if (!userReview) {
         const err = new Error("Review couldn't be found");
@@ -135,15 +135,34 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
     }
 
     if (userReview.userId !== req.user.id) {
-        const err = new Error("Forbidden");
+        const err = new Error("Forbidden request");
         err.status = 404;
         return next(err);
     }
 
-    userReview.set({ review, stars})
+    userReview.set({ review, stars })
     await userReview.save()
     res.status(200).json(userReview)
 })
 
+//router Delete review
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    const review = await Review.findByPk(req.params.reviewId)
 
+
+    if (!review) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    if (review.userId !== req.user.id) {
+        const err = new Error("Forbidden request");
+        err.status = 404;
+        return next(err);
+    }
+
+    await review.destroy()
+    res.status(200).json({ message: "Successfully deleted" })
+})
 module.exports = router

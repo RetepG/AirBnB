@@ -580,7 +580,7 @@ router.post('/:spotId/bookings', requireAuth, validBookTime, checkBooking, async
     }
 
     if (req.user.id === spot.ownerId) {
-        const err = new Error("Forbidden")
+        const err = new Error("Forbidden request")
         err.status = 404;
         return next(err);
     }
