@@ -6,6 +6,16 @@ const { Spot, SpotImage, Review, User, Booking, ReviewImage } = require('../../d
 
 const router = express.Router();
 
+const validateReview = [
+    check('stars')
+        .exists({ checkFalsy: true })
+        .withMessage('Rate stars 1-5'),
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage('Enter in a review'),
+    handleValidationErrors
+]
+
 //get curr review
 router.get('/current', requireAuth, async (req, res) => {
 
@@ -112,6 +122,28 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     });
 
 });
+
+//Edit Review
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
+    const userReview = await Review.findByPk(req.params.reviewId)
+    const { review, stars} = req.body
+
+    if (!userReview) {
+        const err = new Error("Review couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    if (userReview.userId !== req.user.id) {
+        const err = new Error("Forbidden");
+        err.status = 404;
+        return next(err);
+    }
+
+    userReview.set({ review, stars})
+    await userReview.save()
+    res.status(200).json(userReview)
+})
 
 
 module.exports = router
