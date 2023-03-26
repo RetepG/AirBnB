@@ -59,4 +59,32 @@ router.get('/current', requireAuth, async (req, res) => {
     return res.status(200).json({ Bookings: bookingsArr })
 })
 
+//delete a booking
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const booking = await Booking.findByPk(req.params.bookingId)
+
+    if (!booking) {
+        const err = new Error("Booking couldn't be found");
+        err.status = 404;
+        return next(err);
+    }
+
+    if (booking.userId !== req.user.id) {
+        const err = new Error("Current User is not authorized to delete.");
+        err.status = 404;
+        return next(err);
+    }
+
+    const bookingStart = new Date(booking.stateDate)
+    if (bookingStart <= Date.now()) {
+        const err = new Error('Cannot delete booking after stateDate')
+        err.status = 403
+        return next(err)
+    }
+
+    await booking.destroy()
+    res.status(200).json({ message: "Successfully deleted" })
+
+})
+
 module.exports = router;
