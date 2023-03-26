@@ -23,9 +23,11 @@ const validateSpot = [
         .withMessage('Enter in a country.'),
     check('lat')
         .exists({ checkFalsy: true })
+        .custom((lat) => lat >= -90 && lat <= 90)
         .withMessage('Enter in a latitude.'),
     check('lng')
         .exists({ checkFalsy: true })
+        .custom((lng) => lng >= -180 && lng <= 180)
         .withMessage('Enter in a longitude.'),
     check('name')
         .exists({ checkFalsy: true })
