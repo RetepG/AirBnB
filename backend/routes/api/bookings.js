@@ -46,7 +46,13 @@ router.get('/current', requireAuth, async (req, res) => {
         })
 
         // If preview image add it to the spot obj
-        if (spotImage.preview && spotImage === true) {
+        // if (spotImage.preview && spotImage === true) {
+        //     spotObj.previewImage = spotImage.url
+        // } else {
+        //     spotObj.previewImage = null
+        // }
+
+        if (spotImage !== null && spotImage.preview == true){
             spotObj.previewImage = spotImage.url
         } else {
             spotObj.previewImage = null
