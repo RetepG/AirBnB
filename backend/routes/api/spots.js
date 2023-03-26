@@ -67,9 +67,76 @@ const validateSpot = [
 // });
 
 router.get('/', async (req, res) => {
+    //add query
+    let page
+    let size
+
+    if (req.query.page === undefined) {
+        page = 1;
+    } else {
+        page = parseInt(req.query.page);
+    }
+
+    if (req.query.size === undefined) {
+        size = 5;
+    } else {
+        size = parseInt(req.query.size);
+    }
+
+    let offset = size * (page - 1)
+
+    const pag = {}
+    if (page >= 1 && size >= 1) {
+        pag.limit = size;
+        pag.offset = offset;
+    }
+
+    //price
+    let minPrice = parseFloat(req.query.minPrice);
+    let maxPrice = parseFloat(req.query.maxPrice);
+
+    if (isNaN(minPrice)) {
+        minPrice = 0;
+    }
+    if (isNaN(maxPrice)) {
+        maxPrice = Number.MAX_SAFE_INTEGER;
+    }
+
+    //lng and lat
+    let minLng = parseFloat(req.query.minLng);
+    let maxLng = parseFloat(req.query.maxLng);
+    let minLat = parseFloat(req.query.minLat);
+    let maxLat = parseFloat(req.query.maxLat);
+
+    if (isNaN(minLng)) {
+        minLng = -180;
+    }
+    if (isNaN(maxLng)) {
+        maxLng = 180;
+    }
+    if (isNaN(minLat)) {
+        minLat = -90;
+    }
+    if (isNaN(maxLat)) {
+        maxLat = 90;
+    }
+
+    const filters = {
+        price: {
+            [Op.between]: [minPrice, maxPrice],
+        },
+        lng: {
+            [Op.between]: [minLng, maxLng],
+        },
+        lat: {
+            [Op.between]: [minLat, maxLat],
+        }
+    };
+
     // Find all spots
     const spots = await Spot.findAll({
-        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt']
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt'],
+        where: filters, ...pag
     });
 
     //store spot
@@ -100,8 +167,16 @@ router.get('/', async (req, res) => {
         spotsWithAssociations.push({ ...spot.toJSON(), avgRating, previewImage });
     }
 
+    if (isNaN(page) || page < 1) {
+        return res.status(400).json({ error: 'Invalid page parameter' });
+    }
+
+    if (isNaN(size) || size < 1 || size > 100) {
+        return res.status(400).json({ error: 'Invalid size parameter' });
+    }
+
     // Return all spots as the response
-    res.status(200).json({ Spots: spotsWithAssociations });
+    res.status(200).json({ Spots: spotsWithAssociations, page: page, size: size });
 });
 
 //get spot by user
