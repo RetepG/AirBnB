@@ -9,33 +9,31 @@ const router = express.Router();
 //Delete review image spot
 router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const { imageId } = req.params;
+    const spotImage = await SpotImage.findByPk(imageId);
 
-    const reviewImage = await ReviewImage.findByPk(imageId);
-
-    if (!reviewImage) {
-        const err = new Error("Review Image couldn't be found");
+    if (!spotImage) {
+        const err = new Error("Spot Image couldn't be found");
         err.status = 404;
         return next(err);
     }
 
-    const review = await Review.findByPk(reviewImage.reviewId);
+    const spot = await Spot.findByPk(spotImage.spotId); //moved down
 
-    if (!review) {
-        const err = new Error("Review couldn't be found")
+    if (!spot) {
+        const err = new Error("Spot couldn't be found")
         err.status = 404
         return next(err)
     }
 
-    if (review.userId !== req.user.id) {
-        const err = new Error("Forbidden");
-        err.status = 404;
-        return next(err);
+    if (spot.ownerId !== req.user.id) {
+        const err = new Error("Forbidden request")
+        err.status = 403
+        return next(err)
     }
 
+    await spotImage.destroy();
 
-    await reviewImage.destroy();
-
-    return res.status(200).json({ "message": "Successfully deleted" });
+    return res.status(200).json({ message: "Successfully deleted" })
 })
 
 module.exports = router;
