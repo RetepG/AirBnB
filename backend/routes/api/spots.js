@@ -567,7 +567,6 @@ const checkBooking = async (req, res, next) => {
     next();
 }
 
-
 //create a booking from spot based on spot id
 router.post('/:spotId/bookings', requireAuth, validBookTime, checkBooking, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId)
