@@ -51,6 +51,7 @@ router.post(
             lastName: user.lastName,
             email: user.email,
             username: user.username,
+            //added in updated at or created at if needed
         };
 
         await setTokenCookie(res, safeUser);
