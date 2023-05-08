@@ -11,27 +11,42 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: 'www.image.com',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
         preview: true,
       },
       {
         spotId: 2,
-        url: 'www.image2.com',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
         preview: true,
       },
       {
         spotId: 3,
-        url: 'www.image3.com',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
         preview: true,
       },
       {
         spotId: 4,
-        url: 'www.image4.com',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
         preview: false,
       },
       {
         spotId: 5,
-        url: 'www.image5.com',
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
+        preview: true,
+      },
+      {
+        spotId: 6,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
+        preview: true,
+      },
+      {
+        spotId: 7,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
+        preview: true,
+      },
+      {
+        spotId: 8,
+        url: 'https://a0.muscache.com/im/pictures/miso/Hosting-23206143/original/e7da1f36-922f-4631-a287-91ceda05970f.jpeg?im_w=1200',
         preview: true,
       },
     ], {});
