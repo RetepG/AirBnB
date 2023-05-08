@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
 function LoginFormModal() {
     const dispatch = useDispatch();
-    const sessionUser = useSelector((state) => state.session.user);
     const [credential, setCredential] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
@@ -34,6 +32,7 @@ function LoginFormModal() {
                     <input
                         type="text"
                         value={credential}
+                        placeholder="UserName or Email"
                         onChange={(e) => setCredential(e.target.value)}
                         required
                     />
@@ -43,6 +42,7 @@ function LoginFormModal() {
                     <input
                         type="password"
                         value={password}
+                        placeholder="Password"
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
