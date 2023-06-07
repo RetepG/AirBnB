@@ -26,7 +26,7 @@ export const getReviewSpotIdThunk = (spotId) => async (dispatch) => {
     if (res.ok) {
         const data = await res.json();
         console.log('reviews for spot by id data', data)
-        dispatch(getReviewsBySpotId(data));
+        dispatch(getReviewSpotId(data));
         return data
     }
 }
@@ -63,8 +63,8 @@ export default function reviewReducer(state = initialState, action) {
         case GET_REVIEW_SPOT_ID: {
             const newState = { ...state, spot: {}, user: {} }
             const reviews = action.review.Reviews
-            reviews.forEach(r => {
-                newState.spot[r.id] = r
+            reviews.forEach(review => {
+                newState.spot[review.id] = review
             });
             return newState
         }

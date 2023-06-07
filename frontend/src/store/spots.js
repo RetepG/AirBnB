@@ -45,17 +45,17 @@ export const getSpotThunk = () => async (dispatch) => {
 }
 
 export const getSpotIdThunk = (id) => async (dispatch) => {
-    const res = await csrfFetch(`/api/spots/${id}`)
+    const res = await csrfFetch(`/api/spots/${id}`);
 
     if (res.ok) {
-        const spot = await res.json()
-        dispatch(getSpotById(spot))
-        return spot
+        const spot = await res.json();
+        dispatch(getSpotById(spot));
+        return spot;
     }
 }
 
 export const createSpotThunk = (spot) => async (dispatch) => {
-    const res = await csrfFetch('/api/spots/', {
+    const res = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(spot)
@@ -95,12 +95,12 @@ export const updateSpotThunk = (spot) => async (dispatch) => {
 }
 
 //Reducer
-const initialState = { allSpots: null, spotTile: null }
+const initialState = { allSpots: null, singleSpot: null }
 
 export default function spotsReducer(state = initialState, action) {
     switch (action.type) {
         case GET_ALL_SPOTS: {
-            const newState = { ...state, allSpots: { ...state.allSpots }, spotTile: null }
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: null }
             const spots = action.spots.Spots
             spots.forEach(spot => {
                 newState.allSpots[spot.id] = spot
@@ -109,25 +109,29 @@ export default function spotsReducer(state = initialState, action) {
         }
         case GET_SPOT_ID: {
             const spot = action.spot
-            const newState = { ...state, allSpots: { ...state.allSpots }, spotTile: { ...state.spotTile } }
-            newState.spotTile = spot;
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } }
+            newState.singleSpot = spot;
             return newState
+            // const newState = {...state, singleSpot: {...state.singleSpot}};
+            // newState.singleSpot = action.spot;
+            // return newState;
         }
         case CREATE_SPOT: {
             const spot = action.spot
-            const newState = { ...state, allSpots: { ...state.allSpots }, spotTile: { ...state.spotTile } }
-            newState.spotTile = spot
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } }
+            newState.singleSpot = spot
             newState.allSpots[spot.id] = spot
             return newState
         }
         case DELETE_SPOT: {
-            const newState = { ...state, allSpots: { ...state.allSpots }, spotTile: {} }
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: {} }
             delete newState.allSpots[action.spotId]
             return newState
         }
         case UPDATE_SPOT: {
-            const newState = { ...state, allSpots: { ...state.allSpots }, spotTile: { ...state.spotTile } }
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } }
             newState.allSpots[action.spot.id] = { ...newState.allSpots[action.spotId], ...action.spot }
+            return newState
         }
         default: {
             return state;

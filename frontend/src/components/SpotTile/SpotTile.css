@@ -1,0 +1,258 @@
+@media (max-width: 1024px) {
+    .all-spots {
+        width: 25%;
+    }
+
+
+    .tile {
+        display: flex;
+        flex-flow: column;
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .tile:hover{
+        cursor: pointer;
+    }
+
+    .detail-box :hover {
+        cursor: pointer;
+    }
+
+    .image-box {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .img {
+        width: 95%;
+        height: 15rem;
+        border-radius: 10px;
+        max-width: 34rem;
+        max-height: 30rem;
+        border-radius: 10px;
+        margin-right: 3rem;
+    }
+
+    .spot-name {
+        margin: 0px 10px;
+        display: flex;
+        justify-content: space-between;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+        font-weight: bold;
+    }
+
+    .rating {
+        margin: 0px 10px;
+        display: flex;
+        justify-content: space-between;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+        width: 90%;
+        max-width: 34rem;
+        font-size: 0.8rem;
+    }
+
+    .price {
+        margin-left: 10px;
+        margin-top: 5px;
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+    .location {
+        display: flex;
+        flex-flow: column;
+    }
+
+
+    .update-button {
+        margin: 0px 12px;
+        color: white;
+        background-color: grey;
+    }
+
+    .price>span {
+        font-weight: bold;
+    }
+
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .delete-spot-modal {
+        border: 1px solid black;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .delete-spot-modal>h2 {
+        margin: 5PX;
+    }
+
+    .delete-spot-buttons {
+        margin: 10px 0px;
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+    }
+
+    .delete-spot-buttons>button {
+        padding: 5px 5px;
+        margin: 10px 0px;
+        box-shadow: 1px 2px 2px;
+    }
+}
+
+@media (min-width: 1025px) {
+
+    .all-spots {
+        width: 25%;
+    }
+
+
+    .tile {
+        display: flex;
+        flex-flow: column;
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .tile:hover{
+        cursor: pointer;
+    }
+
+    .detail-box :hover {
+        cursor: pointer;
+    }
+
+    .image-box {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .img {
+        width: 95%;
+        height: 100%;
+        border-radius: 10px;
+        max-width: 34rem;
+        max-height: 30rem;
+        border-radius: 10px;
+        margin-right: 3rem;
+    }
+
+    .spot-name {
+        margin: 0px 10px;
+        display: flex;
+        justify-content: space-between;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+        font-weight: bold;
+        font-size: 1.75rem;
+    }
+
+    .rating {
+        margin: 0px 10px;
+        display: flex;
+        justify-content: space-between;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+        width: 90%;
+        max-width: 34rem;
+        font-size: 1.5rem;
+    }
+
+    .price {
+        margin-left: 10px;
+        margin-top: 5px;
+        font-size: 1.5rem;
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+    .location {
+        display: flex;
+        flex-flow: column;
+    }
+
+
+    .update-button {
+        margin: 0px 12px;
+        color: white;
+        background-color: grey;
+    }
+
+    .price>span {
+        font-weight: bold;
+    }
+
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .delete-spot-modal {
+        border: 1px solid black;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .delete-spot-modal>h2 {
+        margin: 5PX;
+    }
+
+    .delete-spot-buttons {
+        margin: 10px 0px;
+        width: 100%;
+        display: flex;
+        flex-flow: column;
+    }
+
+    .delete-spot-buttons>button {
+        padding: 5px 5px;
+        margin: 10px 0px;
+        box-shadow: 1px 2px 2px;
+    }
+}
