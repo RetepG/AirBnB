@@ -1,0 +1,32 @@
+.create-review {
+    border: 1px solid black;
+    padding: 20px;
+    display: flex;
+    flex-flow: column;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-review > h2 {
+    margin: 5px;
+}
+
+.create-review-button {
+    padding: 10px 5px;
+    margin: 10px 0px;
+    width: 100%;
+}
+
+button {
+    box-shadow: 1px 2px 2px;
+}
+
+.create-review-form {
+    border: 1px solid black;
+    width: 268px;
+    display: flex;
+    flex-flow: column;
+    padding: 0px 10px;
+    align-items: center;
+}

@@ -23,34 +23,44 @@ function LoginFormModal() {
             );
     };
 
+    const demoUser = (user) => {
+        user.preventDefault()
+        return dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
+            .then(closeModal);
+    }
+
     return (
-        <>
-            <h1>Log In</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username or Email
-                    <input
-                        type="text"
-                        value={credential}
-                        placeholder="UserName or Email"
-                        onChange={(e) => setCredential(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password
-                    <input
-                        type="password"
-                        value={password}
-                        placeholder="Password"
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                {errors.credential && <p>{errors.credential}</p>}
-                <button type="submit">Log In</button>
-            </form>
-        </>
+        <div className="page">
+            <h1 className="title">Log In</h1>
+            <div className="Center">
+                <form className="login-cred" onSubmit={handleSubmit}>
+                    <label className='username'>
+                        {/* Username or email */}
+                        <input
+                            type="text"
+                            value={credential}
+                            placeholder="Username or Email"
+                            onChange={(e) => setCredential(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label className='password'>
+                        {/* Password */}
+                        <input className="password-input"
+                            type="password"
+                            value={password}
+                            placeholder="Password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </label>
+                    {errors.credential && <p className='error-info'>{errors.credential}</p>}
+                    {/* <button type="submit">Log In</button> */}
+                    <button disabled={(credential.length < 4) || (password.length < 6)} className='login-button' type="submit">Log In</button>
+                </form>
+            </div>
+            <button className="demo-user-button" type='submit' onClick={demoUser}>Demo User</button>
+        </div>
     );
 }
 

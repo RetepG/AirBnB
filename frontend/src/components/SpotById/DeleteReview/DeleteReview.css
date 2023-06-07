@@ -1,0 +1,52 @@
+.delete {
+    border: 1px solid black;
+    padding: 20px;
+    /* margin: 20px; */
+    display: flex;
+    flex-flow: column;
+    background-color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete > h2 {
+    margin: 2px;
+}
+
+.delete > p {
+    font-weight: bold;
+}
+
+.confirmation {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    justify-content: center;
+    align-self: center;
+}
+
+.confirmation > button {
+    padding: 5px 5px;
+    margin: 10px 0px;
+    box-shadow: 1px 2px 2px;
+}
+
+.delete-review-button {
+    background-color: red;
+    color: white;
+}
+
+.no-delete-review-button {
+    background-color: darkgrey;
+    color: white;
+}
+
+.delete-spot-button {
+background-color: red;
+    color: white;
+}
+
+.no-delete-spot-button {
+    background-color: darkgrey;
+    color: white;
+}
