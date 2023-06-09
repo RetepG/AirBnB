@@ -80,7 +80,7 @@ router.get('/', async (req, res) => {
     }
 
     if (req.query.size === undefined) {
-        size = 5;
+        size = 100;
     } else {
         size = parseInt(req.query.size);
     }
