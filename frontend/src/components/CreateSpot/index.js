@@ -239,7 +239,7 @@ function CreateSpotForm() {
                             />
                         </div>
                     </div>
-                    <button type="submit" className="submit-spot-form-button">
+                    <button type="submit" className="submit-button">
                         Create Spot
                     </button>
                 </form>

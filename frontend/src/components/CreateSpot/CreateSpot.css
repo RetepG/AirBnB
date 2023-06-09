@@ -1,3 +1,134 @@
+@media (max-width: 1024px) {
+    .form {
+        display: flex;
+        justify-content: center;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+        padding-left: 2rem;
+
+    }
+
+    .create-spot-form-page {
+
+        display: flex;
+        flex-flow: column;
+        width: 30rem;
+        height: fit-content;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    .submits {
+        display: flex;
+        flex-flow: column;
+        padding: 0px 15px;
+    }
+
+    .address {
+        display: flex;
+        flex-flow: column;
+    }
+
+    .header {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .lead-header {
+        font-weight: bold;
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .city-state-form {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .city-box,
+    .state-box {
+        width: 45%;
+    }
+
+    .spot-title {
+        width: 100%;
+    }
+
+    .labels {
+        font-weight: bold;
+    }
+
+    .inputs {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+
+    .image-inputs {
+        display: flex;
+        flex-flow: column;
+    }
+
+    .image-inputs>input {
+        margin: 4px;
+    }
+
+    .textarea {
+        margin-top: 1rem;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+    }
+
+    .info {
+        margin-bottom: 1rem;
+    }
+
+    .input-group {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .space-dollarsign {
+        margin-right: 0.5rem;
+    }
+
+    .submit-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px 0px;
+        width: fit-content;
+        align-self: center;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        border: solid 2px grey;
+        color: rgb(80, 79, 79);
+        width: 100%;
+        height: auto;
+        max-width: 7rem;
+        max-height: 2rem;
+        margin: 0.5rem auto;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+    }
+
+    .submit-button:hover {
+        cursor: pointer;
+        color: blue;
+        border-color: blue;
+    }
+
+    .error-text {
+        color: red;
+    }
+
+}
+
 .form {
     display: flex;
     justify-content: center;
@@ -92,11 +223,11 @@
     align-items: center;
 }
 
-.space-dollarsign{
+.space-dollarsign {
     margin-right: 0.5rem;
 }
 
-.submit-spot-form-button {
+.submit-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -116,7 +247,7 @@
     font-family: Roboto, Helvetica Neue, sans-serif;
 }
 
-.submit-spot-form-button:hover{
+.submit-button:hover {
     cursor: pointer;
     color: blue;
     border-color: blue;

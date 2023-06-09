@@ -76,8 +76,6 @@
 
 import React from 'react';
 import { useHistory } from 'react-router';
-import DeleteModal from './DeleteModal';
-import OpenModalButton from '../OpenModalButton';
 import './SpotTile.css';
 
 const SpotTile = ({ spot, myspots }) => {
@@ -87,38 +85,19 @@ const SpotTile = ({ spot, myspots }) => {
         history.push(`/spots/${spot.id}`);
     };
 
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        history.push(`/spots/${spot.id}/edit`);
-    };
-
     let preview =
         'https://a0.muscache.com/im/pictures/miso/Hosting-29417765/original/ba764a9c-03b5-43d1-ac74-88d77ead7691.jpeg?im_w=1440';
 
     const formattedPrice = `$${Number(spot.price).toFixed(2)} night`;
 
-    let updateDeleteButtons = null;
-    if (myspots) {
-        updateDeleteButtons = (
-            <div className='update-delete-buttons'>
-                <button onClick={handleUpdate} className='update-button'>
-                    Update
-                </button>
-                <OpenModalButton
-                    buttonText='Delete Spot'
-                    modalComponent={<DeleteModal spotId={spot.id} />}
-                />
-            </div>
-        );
-    }
-
     let ratingElement;
     if (spot.avgRating && spot.avgRating !== 'NEW') {
-        const numStars = Math.floor(spot.avgRating);
+        const avgRating = Number(spot.avgRating).toFixed(1);
+        const numStars = Math.floor(avgRating);
         ratingElement = (
             <span className='star'>
                 <i className="fa-sharp fa-solid fa-star"></i>
-                {numStars}
+                {avgRating}
             </span>
         );
     } else {
@@ -129,6 +108,7 @@ const SpotTile = ({ spot, myspots }) => {
         <div className='all-spots'>
             <div className='tile' onClick={handleClick}>
                 <div className='tooltip'>
+                    <span className='tooltiptext'>{spot.name}</span>
                     <img src={preview} alt='noImage' className='img'></img>
                 </div>
                 <div className='spot-name'>
@@ -147,7 +127,6 @@ const SpotTile = ({ spot, myspots }) => {
                     <span>${Number(spot.price).toFixed(2)}</span> night
                 </div>
             </div>
-            <div>{updateDeleteButtons}</div>
         </div>
     );
 };
