@@ -74,9 +74,9 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     })
 
     if (res.ok) {
-        const spot = await res.json()
+        // const spot = await res.json()
         dispatch(deleteSpot(spotId))
-        return spot
+        // return spot
     }
 }
 

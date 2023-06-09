@@ -18,8 +18,12 @@
 }
 
 .small-image {
-    width: 48%;
+    width: 25%;
     margin-bottom: 10px;
+}
+
+.big-image{
+    width: 50%;
 }
 
 /**/

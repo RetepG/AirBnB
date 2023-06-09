@@ -6,7 +6,7 @@ import DeleteModal from '../SpotTile/DeleteModal';
 import OpenModalButton from '../OpenModalButton';
 import "./ManageSpot.css";
 
-const MySpots = () => {
+const MySpots = (spot) => {
     const dispatch = useDispatch();
     const currentSpots = useSelector((state) => state.spot.allSpots);
     const sessionUser = useSelector((state) => state.session.user);
@@ -55,7 +55,13 @@ const MySpots = () => {
                 {userSpots.map((spot) => (
                     <NavLink to={`/spots/${spot.id}`} key={spot.id}>
                         <div className="My-Spots">
-                            <img src={preview} className="Image" alt={spot.name}></img>
+                            {/* <img src={preview} className="Image" alt={spot.name}></img> */}
+                            <img
+                                src={spot.previewImage}
+                                className="Image"
+                                alt={spot.name}
+                            >
+                            </img>
                             <div className="My-Spots-Info">
                                 <div className="Loc-Rating">
                                     <p className="Spot-Loc">
