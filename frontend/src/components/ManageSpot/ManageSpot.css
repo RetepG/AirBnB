@@ -1,0 +1,252 @@
+@media (max-width: 1024px) {
+    .Whole-Page {
+        margin: 2rem;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+    }
+
+    .Title {
+        font-size: 3rem;
+    }
+
+    #SpotsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .create-spot-button {
+        width: 10rem;
+        text-decoration: none;
+        font-weight: bold;
+        padding: .3rem;
+        font-size: 1rem;
+    }
+
+    .Create-Button {
+        background-color: #f1c40f;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+    }
+
+    .Create-Button a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .Header {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin-bottom: 20px;
+    }
+
+    .My-Spots {
+        width: 13.5rem;
+        height: 28rem;
+        margin: 10px;
+    }
+
+    .Image {
+        width: 100%;
+        height: 16rem;
+        object-fit: cover;
+    }
+
+    .Spot-Info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.6rem;
+        text-decoration: none;
+    }
+
+    .Loc-Rating {
+        display: flex;
+        justify-content: space-between;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+        width: 100%;
+        max-width: 34rem;
+        font-size: 0.6rem;
+    }
+
+    .Spot-Loc {
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .Spot-Rating {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-decoration: none;
+    }
+
+    .Update-Delete {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 5px;
+    }
+
+    .Update-Button {
+        background-color: #f1c40f;
+        color: #ffffff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+        width: 5rem;
+        font-size: 1rem;
+        margin-right: 1rem;
+    }
+
+
+    .Delete-Button {
+        background-color: #ff0000;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:-webkit-any-link {
+        color: black;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+}
+
+/*******************************************************************/
+@media (min-width: 1025px) {
+    .Whole-Page {
+        margin: 2rem;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+    }
+
+    .Title {
+        font-size: 3rem;
+    }
+
+    #SpotsContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .create-spot-button {
+        width: 13rem;
+        text-decoration: none;
+        font-weight: bold;
+        padding: .3rem;
+        font-size: 1rem;
+    }
+
+    .Create-Button {
+        background-color: #f1c40f;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        text-decoration: none;
+    }
+
+    .Create-Button a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .Header {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        margin-bottom: 20px;
+    }
+
+    .My-Spots {
+        width: 27rem;
+        height: 30rem;
+        margin: 10px;
+        text-align: flex-start;
+    }
+
+    .Image {
+        width: 100%;
+        height: 20rem;
+        object-fit: cover;
+    }
+
+    .Spot-Info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1rem;
+        text-decoration: none;
+    }
+
+    .Spot-Loc {
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .Spot-Rating {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        text-decoration: none;
+    }
+
+    .Update-Delete {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 5px;
+    }
+
+    .Update-Button {
+        background-color: #f1c40f;
+        color: #ffffff;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        text-decoration: none;
+        width: 10rem;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+    }
+
+    .Loc-Rating {
+        display: flex;
+        justify-content: space-between;
+        font-family: Roboto, Helvetica Neue, sans-serif;
+        width: 100%;
+        max-width: 34rem;
+        font-size: 1rem;
+    }
+
+    .Delete-Button {
+        background-color: #ff0000;
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    a:-webkit-any-link {
+        color: black;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    button{
+        cursor: pointer;
+    }
+
+}
