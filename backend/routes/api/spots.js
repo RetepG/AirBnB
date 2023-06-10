@@ -406,9 +406,9 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         error.errors.push("url is required");
     }
 
-    if (!preview || preview === '') {
-        error.errors.push("preview is required");
-    }
+    // if (!preview || preview === '') {
+    //     error.errors.push("preview is required");
+    // }
 
     if (error.errors.length) {
         return res.status(400).json(error);

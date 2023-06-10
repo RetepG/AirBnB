@@ -54,19 +54,74 @@ export const getSpotIdThunk = (id) => async (dispatch) => {
     }
 }
 
-export const createSpotThunk = (spot) => async (dispatch) => {
-    const res = await csrfFetch('/api/spots', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(spot)
-    })
+// export const createSpotThunk = (spot) => async (dispatch) => {
+//     const res = await csrfFetch('/api/spots', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify(spot)
+//     })
 
-    if (res.ok) {
-        const spot = await res.json()
-        dispatch(createSpot(spot))
-        return spot
+//     if (res.ok) {
+//         const spot = await res.json()
+//         dispatch(createSpot(spot))
+//         return spot
+//     }
+// }
+
+export const createSpotThunk = (spot) => async (dispatch) => {
+    const {
+        ownerId,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price,
+        spotImages
+    } = spot;
+
+    const spot2 = {
+        ownerId,
+        address,
+        city,
+        state,
+        country, 
+        lat,
+        lng,
+        name,
+        description,
+        price
+    };
+
+    const response = await csrfFetch('/api/spots', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(spot2)
+    });
+
+    if (response.ok) {
+        const spot = await response.json();
+
+        for (let i = 0; i < spotImages.length; i++) {
+            const image = spotImages[i];
+            await csrfFetch(`/api/spots/${spot.id}/images`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(image)
+            });
+        }
+
+        dispatch(createSpot(spot));
+        return spot;
     }
-}
+};
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}`, {
@@ -74,9 +129,9 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     })
 
     if (res.ok) {
-        const spot = await res.json()
+        // const spot = await res.json()
         dispatch(deleteSpot(spotId))
-        return spot
+        // return spot
     }
 }
 

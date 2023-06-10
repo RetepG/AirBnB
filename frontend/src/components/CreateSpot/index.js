@@ -51,6 +51,7 @@ function CreateSpotForm() {
         e.preventDefault();
 
         const newErrors = {};
+        const spotImages = [];
 
         if (!formValues.address) newErrors.address = 'Address is required';
         if (!formValues.city) newErrors.city = 'City is required';
@@ -60,27 +61,99 @@ function CreateSpotForm() {
         if (formValues.description.length < 30) newErrors.description = 'Description needs a minimum of 30 characters';
         if (!Number(formValues.price)) newErrors.price = 'Price must be a valid integer';
         if (!formValues.price) newErrors.price = 'Price is required';
-        if (!formValues.previewImage) newErrors.prevImg = 'Preview Image is required';
+
+        if (!formValues.previewImage) newErrors.previewImage = 'A preview image is required!';
+        else if (
+            !(formValues.previewImage.endsWith(".png")) &&
+            !(formValues.previewImage.endsWith(".jpg")) &&
+            !(formValues.previewImage.endsWith(".jpeg"))
+        ) {
+            newErrors.previewImageEnding = "Please make sure your preview image URL ends with .png, .jpg, or .jpeg";
+        }
+        // else {
+        //     spotImages.push(formValues.previewImage)
+        // }
+        const imageUrls = ["img1", "img2", "img3", "img4"];
+        for (const imageUrl of imageUrls) {
+            if (formValues[imageUrl]) {
+                if (
+                    !(formValues[imageUrl].endsWith(".png")) &&
+                    !(formValues[imageUrl].endsWith(".jpg")) &&
+                    !(formValues[imageUrl].endsWith(".jpeg"))
+                ) {
+                    newErrors[`${imageUrl}Ending`] = `Please make sure your ${imageUrl} URL ends with .png, .jpg, or .jpeg`;
+                } else {
+                    spotImages.push({ url: formValues[imageUrl], preview: false });
+                }
+            }
+        }
+
+        // if (Object.keys(newErrors).length === 0) {
+        //     const { id } = await dispatch(createSpotThunk({
+        //         address: formValues.address,
+        //         city: formValues.city,
+        //         state: formValues.state,
+        //         country: formValues.country,
+        //         lat: 1,
+        //         lng: 1,
+        //         name: formValues.title,
+        //         description: formValues.description,
+        //         price: formValues.price,
+        //         previewImage: { url: formValues.previewImage, preview: true }, // Include the previewImage in the dispatched action
+        //         spotImages: spotImages,
+        //     }));
+
+        //     history.push(`/spots/${id}`);
+        // }
+
+        const previewImg = { url: formValues.previewImage, preview: true }
+        spotImages.push(previewImg)
+
+        // const smallImg1 = { url: formValues.img1, preview: false }
+        // const smallImg2 = { url: formValues.img2, preview: false }
+        // const smallImg3 = { url: formValues.img3, preview: false }
+        // const smallImg4 = { url: formValues.img4, preview: false }
+
+        // if (!formValues.img1) {
+        //     spotImages.push(smallImg1)
+        // }
+        // if (!formValues.img2) {
+        //     spotImages.push(smallImg2)
+        // }
+        // if (!formValues.img3) {
+        //     spotImages.push(smallImg3)
+        // }
+        // if (!formValues.img4) {
+        //     spotImages.push(smallImg4)
+        // }
+
+        console.log(spotImages)
+
+        const object = {
+            id: null,
+            address: formValues.address,
+            city: formValues.city,
+            state: formValues.state,
+            country: formValues.country,
+            lat: 1,
+            lng: 1,
+            name: formValues.title,
+            description: formValues.description,
+            price: formValues.price,
+            // previewImage: { url: formValues.previewImage, preview: true }, // Include the previewImage in the dispatched action
+            spotImages: spotImages,
+        }
+        console.log(object)
 
         if (Object.keys(newErrors).length === 0) {
-            const { id } = await dispatch(createSpotThunk({
-                address: formValues.address,
-                city: formValues.city,
-                state: formValues.state,
-                country: formValues.country,
-                lat: 1,
-                lng: 1,
-                name: formValues.title,
-                description: formValues.description,
-                price: formValues.price,
-            }));
-
-            history.push(`/spots/${id}`);
+            const { id } = await dispatch(createSpotThunk(object))
+            history.push(`/spots/${id}`)
         }
+
+        console.log(object)
 
         setErrors(newErrors);
     };
-
     return (
         <div className="form">
             <div className="create-spot-form-page">
@@ -192,6 +265,7 @@ function CreateSpotForm() {
                         </div>
                         {errors.price && <p className="error-text">{errors.price}</p>}
                     </div>
+
                     <div>
                         <div className="lead-header">Liven up your spot with photos</div>
                         <p>Submit a link to at least one photo to publish your spot.</p>
@@ -204,7 +278,10 @@ function CreateSpotForm() {
                                 onChange={handleInputChange}
                                 placeholder="Preview Image URL"
                             />
-                            {errors.prevImg && <span className="error-text">{errors.prevImg}</span>}
+                            {errors.previewImage && <span className="error-text">{errors.previewImage}</span>}
+                            {errors.previewImageEnding && (
+                                <span className="error-text">{errors.previewImageEnding}</span>
+                            )}
                             <input
                                 type="text"
                                 name="img1"
@@ -213,6 +290,7 @@ function CreateSpotForm() {
                                 onChange={handleInputChange}
                                 placeholder="Image URL"
                             />
+                            {errors.img1Ending && <span className="error-text">{errors.img1Ending}</span>}
                             <input
                                 type="text"
                                 name="img2"
@@ -221,6 +299,7 @@ function CreateSpotForm() {
                                 onChange={handleInputChange}
                                 placeholder="Image URL"
                             />
+                            {errors.img2Ending && <span className="error-text">{errors.img2Ending}</span>}
                             <input
                                 type="text"
                                 name="img3"
@@ -229,6 +308,7 @@ function CreateSpotForm() {
                                 onChange={handleInputChange}
                                 placeholder="Image URL"
                             />
+                            {errors.img3Ending && <span className="error-text">{errors.img3Ending}</span>}
                             <input
                                 type="text"
                                 name="img4"
@@ -237,6 +317,7 @@ function CreateSpotForm() {
                                 onChange={handleInputChange}
                                 placeholder="Image URL"
                             />
+                            {errors.img4Ending && <span className="error-text">{errors.img4Ending}</span>}
                         </div>
                     </div>
                     <button type="submit" className="submit-button">
