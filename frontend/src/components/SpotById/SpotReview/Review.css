@@ -1,11 +1,9 @@
 .review-block {
-    /* border: 1px solid black; */
     margin: 10px 0px;
 }
 
 .review-block > h3 {
     margin: 10px 0px 5px;
-    /* font-size: 18px; */
 }
 
 .created-at {

@@ -1,0 +1,10 @@
+.Open-Modal-Button{
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    width: 10rem;
+    font-size: 1rem;
+    margin-right: 1rem;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+}
