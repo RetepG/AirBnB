@@ -25,7 +25,6 @@ export const getReviewSpotIdThunk = (spotId) => async (dispatch) => {
 
     if (res.ok) {
         const data = await res.json();
-        console.log('reviews for spot by id data', data)
         dispatch(getReviewSpotId(data));
         return data
     }

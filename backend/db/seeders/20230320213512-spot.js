@@ -9,16 +9,6 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-
-    // Retreive users from users table setting it to id
-    // const users = await User.findAll();
-    // const userId = [];
-
-    // for (let i = 0; i < users.length; i++) {
-    //   const user = users[i];
-    //   userId.push({ username: user.username, id: user.id });
-    // }
-
     options.tableName = 'Spots';
     return queryInterface.bulkInsert(options, [
       {
@@ -133,7 +123,6 @@ module.exports = {
     const Op = Sequelize.Op;
 
     return queryInterface.bulkDelete(options, {
-      // username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
       id: { [Op.in]: [1, 2, 3, 4, 5] }
     }, {});
   }

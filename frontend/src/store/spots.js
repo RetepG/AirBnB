@@ -54,20 +54,6 @@ export const getSpotIdThunk = (id) => async (dispatch) => {
     }
 }
 
-// export const createSpotThunk = (spot) => async (dispatch) => {
-//     const res = await csrfFetch('/api/spots', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(spot)
-//     })
-
-//     if (res.ok) {
-//         const spot = await res.json()
-//         dispatch(createSpot(spot))
-//         return spot
-//     }
-// }
-
 export const createSpotThunk = (spot) => async (dispatch) => {
     const {
         ownerId,
@@ -88,7 +74,7 @@ export const createSpotThunk = (spot) => async (dispatch) => {
         address,
         city,
         state,
-        country, 
+        country,
         lat,
         lng,
         name,
@@ -129,9 +115,7 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     })
 
     if (res.ok) {
-        // const spot = await res.json()
         dispatch(deleteSpot(spotId))
-        // return spot
     }
 }
 
@@ -167,9 +151,6 @@ export default function spotsReducer(state = initialState, action) {
             const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } }
             newState.singleSpot = spot;
             return newState
-            // const newState = {...state, singleSpot: {...state.singleSpot}};
-            // newState.singleSpot = action.spot;
-            // return newState;
         }
         case CREATE_SPOT: {
             const spot = action.spot

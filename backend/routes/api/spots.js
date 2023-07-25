@@ -42,32 +42,6 @@ const validateSpot = [
 ];
 
 // get all users
-// router.get('/', async (req, res) => {
-//     // Find all spots and their associated data
-//     const spots = await Spot.findAll({
-//         attributes: [
-//             'id', 'ownerId', 'address', 'city', 'state',
-//             'country', 'lat', 'lng', 'name', 'description',
-//             'price', 'createdAt', 'updatedAt',
-//             // include the average rating using a subquery
-//             [
-//                 sequelize.literal(`(SELECT AVG(stars)
-//                 FROM Reviews
-//                 WHERE Reviews.spotId = Spot.id
-//                 )`), 'avgRating'
-//             ],
-//             [
-//                 sequelize.literal(`(SELECT url
-//                 FROM "SpotImages"
-//                 WHERE "SpotImages"."spotId" = "Spot"."id")`), 'previewImage',
-//             ],
-//         ]
-//     });
-
-//     // Return all spots as the response
-//     return res.status(200).json({ Spots: spots });
-// });
-
 router.get('/', async (req, res) => {
     //add query
     let page
@@ -182,33 +156,6 @@ router.get('/', async (req, res) => {
 });
 
 //get spot by user
-// router.get('/current', requireAuth, async (req, res) => {
-//     const userId = req.user.id
-
-//     const spots = await Spot.findAll({
-//         where: {
-//             ownerId: req.user.id
-//         },
-//         attributes: [
-//             'id', 'ownerId', 'address', 'city', 'state',
-//             'country', 'lat', 'lng', 'name', 'description',
-//             'price', 'createdAt', 'updatedAt',
-//             // include the average rating using a subquery
-//             [
-//                 sequelize.literal(`(SELECT AVG(stars)
-//                 FROM Reviews
-//                 WHERE Reviews.spotId = Spot.id
-//                 )`), 'avgRating'
-//             ],
-//             [
-//                 sequelize.literal(`(SELECT url
-//                 FROM "SpotImages"
-//                 WHERE "SpotImages"."spotId" = "Spot"."id")`), 'previewImage',
-//             ],
-//         ],
-//     });
-//     return res.status(200).json({ Spots: spots });
-// });
 router.get('/current', async (req, res) => {
     // Find all spots
     const spots = await Spot.findAll({
@@ -251,50 +198,6 @@ router.get('/current', async (req, res) => {
 });
 
 //get detail of spot from :id
-// router.get('/:id', async (req, res, next) => {
-//     const spot = await Spot.findByPk(req.params.id, {
-//         group: ['Spot.id', 'SpotImages.id', 'Owner.id'],
-//         attributes: {
-//             include: [
-//                 [
-//                     sequelize.literal(`(SELECT COUNT(*)
-//                     FROM Reviews
-//                     WHERE Reviews.spotId = Spot.id
-//                     )`), 'numReviews'
-//                 ],
-//                 [
-//                     sequelize.literal(`(SELECT AVG(stars)
-//                     FROM Reviews
-//                     WHERE Reviews.spotId = Spot.id
-//                     )`), 'avgRating'
-//                 ],
-//             ]
-//         },
-//         include: [
-//             {
-//                 model: Review,
-//                 attributes: [],
-//             },
-//             {
-//                 model: SpotImage,
-//                 attributes: ['id', 'url', 'preview']
-//             },
-//             {
-//                 as: 'Owner',
-//                 model: User,
-//                 attributes: ['id', 'firstName', 'lastName']
-//             }
-//         ]
-//     })
-//     if (!spot && spot === null) {
-//         res.status(404);
-//         return res.json({ message: "Spot couldn't be found!" })
-//     }
-//     console.log(spot)
-
-//     return res.json({ spot })
-// })
-
 router.get('/:spotId', async (req, res, next) => {
     let spot = await Spot.findByPk(req.params.spotId, {
         include: [
@@ -405,10 +308,6 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     if (!url || url === '') {
         error.errors.push("url is required");
     }
-
-    // if (!preview || preview === '') {
-    //     error.errors.push("preview is required");
-    // }
 
     if (error.errors.length) {
         return res.status(400).json(error);

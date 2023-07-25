@@ -45,13 +45,6 @@ router.get('/current', requireAuth, async (req, res) => {
             }
         })
 
-        // If preview image add it to the spot obj
-        // if (spotImage.preview && spotImage === true) {
-        //     spotObj.previewImage = spotImage.url
-        // } else {
-        //     spotObj.previewImage = null
-        // }
-
         if (spotImage !== null && spotImage.preview == true){
             spotObj.previewImage = spotImage.url
         } else {
@@ -70,27 +63,16 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
     const booking = await Booking.findByPk(req.params.bookingId)
 
     if (!booking) {
-        // const err = new Error("Booking couldn't be found")
-        // err.status = 404
-        // return next(err)
         return res.status(404).json({ message: "Booking couldn't be found" })
     }
 
     if (booking.userId !== req.user.id) {
-        // const err = new Error('Forbidden request')
-        // err.status = 404
-        // return next(err)
         return res.status(404).json({ message: "Forbidden request" })
     }
-
 
     const startDate2 = new Date(req.body.startDate);
     const endDate2 = new Date(req.body.endDate);
 
-    // if (endDate <= startDate) {
-    //     return err.errors.endDate = 'endDate cannot be on or before startDate'
-    //     // return next(err);
-    // }
     if (endDate2 <= startDate2) {
         return res.status(400).json({
             message: "Bad Request",
@@ -108,10 +90,6 @@ router.put('/:bookingId', requireAuth, async (req, res, next) => {
 
     // Find all bookings for the specified spot and convert them to an array of JSON objects
     const bookings = await Booking.findAll({
-        // where: {
-        //     bookingId
-        // },
-        // attributes: ['id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt']
     });
 
     const bookingsArray = bookings.map((booking) => booking.toJSON());

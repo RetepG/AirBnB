@@ -4,9 +4,6 @@ import sessionReducer from "./session";
 import spotsReducer from "./spots";
 import reviewReducer from "./review";
 
-// const rootReducer = combineReducers({
-//   // add reducer functions here
-// });
 const rootReducer = combineReducers({
   // add reducer functions here
   session: sessionReducer,
