@@ -1,5 +1,6 @@
 import { csrfFetch } from "./csrf";
 
+//Action Type
 const GET_ALL_SPOTS = 'spots/getAllSpots'
 const GET_SPOT_ID = 'spots/getSpotId'
 const CREATE_SPOT = 'spots/createSpot'
@@ -88,7 +89,7 @@ export const createSpotThunk = (spot) => async (dispatch) => {
         address,
         city,
         state,
-        country, 
+        country,
         lat,
         lng,
         name,
@@ -107,7 +108,7 @@ export const createSpotThunk = (spot) => async (dispatch) => {
     if (response.ok) {
         const spot = await response.json();
 
-        for (let i = 0; i < spotImages.length; i++) {
+        for (let i = 0; i < spotImages.length; i++) { //looping through spotimage array to upload
             const image = spotImages[i];
             await csrfFetch(`/api/spots/${spot.id}/images`, {
                 method: 'POST',
@@ -152,44 +153,41 @@ export const updateSpotThunk = (spot) => async (dispatch) => {
 //Reducer
 const initialState = { allSpots: null, singleSpot: null }
 
-export default function spotsReducer(state = initialState, action) {
+export default function spotsReducer(state = initialState, action) { // Spots reducer function.
     switch (action.type) {
-        case GET_ALL_SPOTS: {
-            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: null }
-            const spots = action.spots.Spots
-            spots.forEach(spot => {
-                newState.allSpots[spot.id] = spot
+        case GET_ALL_SPOTS: { // Case for getting all spots.
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: null }; // Creating a new state object with the updated allSpots and singleSpot properties.
+            const spots = action.spots.Spots; // Extracting the spots array from the action payload.
+            spots.forEach(spot => { // Iterating over the spots array to update the allSpots property.
+                newState.allSpots[spot.id] = spot;
             });
-            return newState
+            return newState;
         }
-        case GET_SPOT_ID: {
-            const spot = action.spot
-            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } }
-            newState.singleSpot = spot;
-            return newState
-            // const newState = {...state, singleSpot: {...state.singleSpot}};
-            // newState.singleSpot = action.spot;
-            // return newState;
+        case GET_SPOT_ID: { // Case for getting a spot by ID.
+            const spot = action.spot; // Extracting the spot object from the action payload.
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } };
+            newState.singleSpot = spot; // Updating the singleSpot property with the received spot data.
+            return newState;
         }
-        case CREATE_SPOT: {
-            const spot = action.spot
-            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } }
-            newState.singleSpot = spot
-            newState.allSpots[spot.id] = spot
-            return newState
+        case CREATE_SPOT: { // Case for creating a spot.
+            const spot = action.spot; // Extracting the spot object from the action payload.
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } };
+            newState.singleSpot = spot; // Updating the singleSpot property with the created spot data.
+            newState.allSpots[spot.id] = spot; // Updating the allSpots property with the created spot data.
+            return newState;
         }
-        case DELETE_SPOT: {
-            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: {} }
-            delete newState.allSpots[action.spotId]
-            return newState
+        case DELETE_SPOT: { // Case for deleting a spot.
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: {} };
+            delete newState.allSpots[action.spotId]; // Removing the deleted spot from the allSpots property.
+            return newState;
         }
-        case UPDATE_SPOT: {
-            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } }
-            newState.allSpots[action.spot.id] = { ...newState.allSpots[action.spotId], ...action.spot }
-            return newState
+        case UPDATE_SPOT: { // Case for updating a spot.
+            const newState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...state.singleSpot } };
+            newState.allSpots[action.spot.id] = { ...newState.allSpots[action.spotId], ...action.spot }; // Updating the spot data in the allSpots property.
+            return newState;
         }
-        default: {
-            return state;
+        default: { // Default case.
+            return state; // Returning the current state.
         }
     }
 }

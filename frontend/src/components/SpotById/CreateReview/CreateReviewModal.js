@@ -7,13 +7,12 @@ import { getSpotIdThunk } from "../../../store/spots";
 import "../CreateReview/CreateReview.css"
 
 function CreateReviewModal({ spotId }) {
-
   const [review, setReview] = useState("");
   const [stars, setStars] = useState();
 
-  const { closeModal } = useModal();
+  const { closeModal } = useModal(); // Accessing the closeModal function from the useModal hook.
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useHistory(); // Accessing the history object from React Router.
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +22,11 @@ function CreateReviewModal({ spotId }) {
       stars,
     }
 
-    await dispatch(createReviewThunk(newReview, spotId))
-    await dispatch(getSpotIdThunk(spotId));
-    await dispatch(getReviewSpotIdThunk(spotId));
-    history.push(`/spots/${spotId}`);
-    closeModal();
+    await dispatch(createReviewThunk(newReview, spotId)); //create a new review.
+    await dispatch(getSpotIdThunk(spotId)); //get updated spot data.
+    await dispatch(getReviewSpotIdThunk(spotId)); //get updated review data.
+    history.push(`/spots/${spotId}`); // Redirecting to the spot page.
+    closeModal(); // Closing the modal.
   }
 
   return (

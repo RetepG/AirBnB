@@ -58,9 +58,8 @@ function UpdateSpot() {
         if (!price) errors.price = 'Price is required';
 
 
-        if (!Object.values(errors).length) {
-
-            await dispatch(updateSpotThunk({
+        if (!Object.values(errors).length) { // If there are no validation errors:
+            await dispatch(updateSpotThunk({ // Dispatching a Redux thunk action to update the spot.
                 id,
                 address,
                 city,
@@ -71,11 +70,10 @@ function UpdateSpot() {
                 name: title,
                 description,
                 price
-            }))
-            history.push(`/spots/${id}`)
+            }));
+            history.push(`/spots/${id}`); // Redirecting to the spot page.
         }
-        setErrors(errors);
-
+        setErrors(errors); // Setting the errors state variable.
     };
 
     return (

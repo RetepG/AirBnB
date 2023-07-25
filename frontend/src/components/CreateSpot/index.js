@@ -7,7 +7,7 @@ import { createSpotThunk, getSpotThunk } from "../../store/spots";
 function CreateSpotForm() {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [formValues, setFormValues] = useState({
+    const [formValues, setFormValues] = useState({ // Initializing a state variable for the form values and a corresponding setter function.
         country: "",
         address: "",
         city: "",
@@ -141,7 +141,7 @@ function CreateSpotForm() {
             description: formValues.description,
             price: formValues.price,
             // previewImage: { url: formValues.previewImage, preview: true }, // Include the previewImage in the dispatched action
-            spotImages: spotImages,
+            spotImages: spotImages, //array of spot images
         }
         console.log(object)
 

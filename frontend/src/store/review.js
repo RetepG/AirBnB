@@ -60,27 +60,27 @@ const initialState = { spot: {}, user: {} }
 
 export default function reviewReducer(state = initialState, action) {
     switch (action.type) {
-        case GET_REVIEW_SPOT_ID: {
-            const newState = { ...state, spot: {}, user: {} }
-            const reviews = action.review.Reviews
+        case GET_REVIEW_SPOT_ID: { // Handle the action for getting review by spot ID
+            const newState = { ...state, spot: {}, user: {} }; // Create a new state object
+            const reviews = action.review.Reviews; // Get the reviews from the action payload
             reviews.forEach(review => {
-                newState.spot[review.id] = review
+                newState.spot[review.id] = review; // Update the state with the reviews
             });
-            return newState
+            return newState;
         }
-        case DELETE_REVIEW: {
-            const newState = { ...state, spot: { ...state.spot }, user: { ...state.user } }
-            delete newState.spot[action.reviewId]
-            return newState
+        case DELETE_REVIEW: { // Handle the action for deleting a review
+            const newState = { ...state, spot: { ...state.spot }, user: { ...state.user } }; // Create a new state object
+            delete newState.spot[action.reviewId]; // Delete the review from the state
+            return newState;
         }
-        case CREATE_REVIEW: {
-            const newState = { ...state, spot: { ...state.spot }, user: { ...state.user } }
-            const review = action.review;
-            newState.spot[review.id] = review;
-            return newState
+        case CREATE_REVIEW: { // Handle the action for creating a review
+            const newState = { ...state, spot: { ...state.spot }, user: { ...state.user } }; // Create a new state object
+            const review = action.review; // Get the new review from the action payload
+            newState.spot[review.id] = review; // Add the new review to the state
+            return newState;
         }
         default: {
-            return state;
+            return state; // Return the current state for any other action type
         }
     }
 }

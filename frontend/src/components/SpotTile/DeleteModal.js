@@ -38,23 +38,22 @@ import { useHistory } from "react-router-dom";
 import "./DeleteModal.css"
 
 function DeleteModal({ spotId }) {
-    const { closeModal } = useModal();
+    const { closeModal } = useModal(); // Get the closeModal function from the useModal hook
     const dispatch = useDispatch();
     const history = useHistory();
-    const currentSpots = useSelector((state) => state.spot.allSpots);
+    const currentSpots = useSelector((state) => state.spot.allSpots); // Get the currentSpots from the spot state in the Redux store
 
     const handleDelete = async (shouldDelete) => {
         if (shouldDelete) {
             await dispatch(deleteSpotThunk(spotId));
             // Manually remove the spot from the currentSpots array
-            const updatedSpots = { ...currentSpots };
-            delete updatedSpots[spotId];
-            dispatch({ type: 'SET_SPOTS', spots: updatedSpots });
-            history.push('/spots/current');
+            const updatedSpots = { ...currentSpots }; // Create a copy of the currentSpots object
+            delete updatedSpots[spotId]; // Remove the spot with the given spotId from the updatedSpots object
+            dispatch({ type: 'SET_SPOTS', spots: updatedSpots }); // Dispatch an action to update the spots state with the updatedSpots object
+            history.push('/spots/current'); // Navigate to the '/spots/current' route
         }
         closeModal();
     }
-
     return (
         <div className="delete-spot-modal">
             <h2>Confirm Delete</h2>
